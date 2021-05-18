@@ -22,7 +22,8 @@ RUN apt-get update && apt-get install -y \
     tmux \
     zsh \
     vim \
-    nano
+    nano \
+    ansible
 
 #Python related
 RUN pip3 install --upgrade cffi

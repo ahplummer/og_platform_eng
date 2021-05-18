@@ -20,6 +20,7 @@ So far:
 * spacevim
 * oh-my-zsh
 * nano
+* ansible
 
 I've uploaded the latest build of the image [here on Dockerhub](https://hub.docker.com/repository/docker/ahplummer/og_platform_eng).
 

@@ -8,7 +8,7 @@ help:
 	@echo '>make zsh				/ runs oh-my-zsh shell'
 
 build:
-	docker build -t og_platform_eng -f Dockerfile.og_platform_eng .
+	docker build -t og_platform_eng .
 
 bash: build
 	docker run -v $(CURDIR):/host -v ~/.aws:/root/.aws -it og_platform_eng:latest bash
