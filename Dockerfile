@@ -3,6 +3,9 @@ LABEL maintainer="https://github.com/ahplummer"
 ENV tf_version=0.15.3
 # Do normal installs
 RUN apt-get update && apt-get install -y \
+    apt-transport-https \
+    debconf-utils \
+    gnupg2 \
     python3-pip \
     groff \
     git \
@@ -23,7 +26,9 @@ RUN apt-get update && apt-get install -y \
     zsh \
     vim \
     nano \
-    ansible
+    ansible \ 
+    postgresql-client \ 
+    mysql-client
 
 #Python related
 RUN pip3 install --upgrade cffi
@@ -60,6 +65,18 @@ RUN curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 |
 RUN wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | apt-key add -
 RUN echo "deb https://packages.cloudfoundry.org/debian stable main" | tee /etc/apt/sources.list.d/cloudfoundry-cli.list
 RUN apt-get update && apt-get install -y cf7-cli
+
+#MSSQL tooling
+RUN curl -s -N https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+RUN curl https://packages.microsoft.com/config/ubuntu/18.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
+# install SQL Server drivers and tools
+RUN apt-get update && ACCEPT_EULA=Y apt-get install -y msodbcsql17 mssql-tools
+RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+RUN /bin/bash -c "source ~/.bashrc"
+RUN apt-get -y install locales
+RUN locale-gen en_US.UTF-8
+RUN update-locale LANG=en_US.UTF-8
+RUN ln -s /opt/mssql-tools/bin/sqlcmd /usr/bin/sqlcmd
 
 RUN mkdir /host
 ENV PATH="/host:${PATH}"

@@ -21,6 +21,9 @@ So far:
 * oh-my-zsh
 * nano
 * ansible
+* MySQL Client
+* PSQL Client
+* MSSQL Client (sqlcmd)
 
 I've uploaded the latest build of the image [here on Dockerhub](https://hub.docker.com/repository/docker/ahplummer/og_platform_eng).
 
@@ -47,7 +50,7 @@ Clone this repo:
 ```
 git clone https://github.com/ahplummer/og_platform_eng.git
 ```
-Build the image from dockerhub (preloaded):
+Build the image from original Dockerfile:
 ```
 make build
 ```
