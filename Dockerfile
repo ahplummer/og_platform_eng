@@ -78,6 +78,15 @@ RUN locale-gen en_US.UTF-8
 RUN update-locale LANG=en_US.UTF-8
 RUN ln -s /opt/mssql-tools/bin/sqlcmd /usr/bin/sqlcmd
 
+#install vault
+#RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
+#RUN apt-get install software-properties-common -y
+#RUN apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com bionic main"
+#RUN apt-get update && apt-get install vault -y
+RUN wget https://releases.hashicorp.com/vault/1.7.2/vault_1.7.2_linux_amd64.zip \
+	&& unzip vault_1.7.2_linux_amd64.zip	
+RUN mv vault /usr/bin/vault
+
 RUN mkdir /host
 ENV PATH="/host:${PATH}"
 WORKDIR /host
