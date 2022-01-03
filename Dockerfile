@@ -1,6 +1,8 @@
-FROM ubuntu:18.04
+FROM ubuntu:21.10
 LABEL maintainer="https://github.com/ahplummer"
-ENV tf_version=0.15.3
+ENV tf_version=1.1.2
+ENV vault_version=1.9.2
+ARG DEBIAN_FRONTEND=noninteractive
 # Do normal installs
 RUN apt-get update && apt-get install -y \
     apt-transport-https \
@@ -66,9 +68,12 @@ RUN wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.k
 RUN echo "deb https://packages.cloudfoundry.org/debian stable main" | tee /etc/apt/sources.list.d/cloudfoundry-cli.list
 RUN apt-get update && apt-get install -y cf7-cli
 
+
+RUN apt-get install -y unixodbc
 #MSSQL tooling
 RUN curl -s -N https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
 RUN curl https://packages.microsoft.com/config/ubuntu/18.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
+
 # install SQL Server drivers and tools
 RUN apt-get update && ACCEPT_EULA=Y apt-get install -y msodbcsql17 mssql-tools
 RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
@@ -78,13 +83,9 @@ RUN locale-gen en_US.UTF-8
 RUN update-locale LANG=en_US.UTF-8
 RUN ln -s /opt/mssql-tools/bin/sqlcmd /usr/bin/sqlcmd
 
-#install vault
-#RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
-#RUN apt-get install software-properties-common -y
-#RUN apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com bionic main"
-#RUN apt-get update && apt-get install vault -y
-RUN wget https://releases.hashicorp.com/vault/1.7.2/vault_1.7.2_linux_amd64.zip \
-	&& unzip vault_1.7.2_linux_amd64.zip	
+#install Vault
+RUN wget https://releases.hashicorp.com/vault/${vault_version}/vault_${vault_version}_linux_amd64.zip \
+	&& unzip vault_${vault_version}_linux_amd64.zip	
 RUN mv vault /usr/bin/vault
 
 RUN mkdir /host
