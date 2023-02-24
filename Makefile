@@ -14,4 +14,4 @@ bash: build
 	docker run -v $(CURDIR):/host -v ~/.aws:/root/.aws -it og_platform_eng:latest bash
 
 run: build
-	docker run -v $(CURDIR):/host -v ~/.aws:/root/.aws -it og_platform_eng:latest /bin/zsh
+	docker run -v $(CURDIR):/host -v ~/.aws:/root/.aws -v ~/.config/gcloud:/root/.config/gcloud -it og_platform_eng:latest /bin/zsh

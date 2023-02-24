@@ -1,4 +1,4 @@
-FROM ubuntu:21.10
+FROM ubuntu:23.04
 LABEL maintainer="https://github.com/ahplummer"
 ENV tf_version=1.1.2
 ENV vault_version=1.9.2
@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
     groff \
     git \
     libpq-dev \
-    python-dev \
+    python3-dev \
     libssl-dev \
     build-essential \
     libffi-dev \
