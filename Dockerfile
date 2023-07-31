@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
     groff \
     git \
     libpq-dev \
-    python3-dev \
+    python3 \
     libssl-dev \
     build-essential \
     libffi-dev \
@@ -33,10 +33,10 @@ RUN apt-get update && apt-get install -y \
     mysql-client
 
 #Python related
-RUN pip3 install --upgrade cffi
-RUN pip3 install cryptography
-RUN pip3 install awscli --upgrade
-RUN pip3 install virtualenv
+RUN pip3 install --upgrade cffi --break-system-packages
+RUN pip3 install cryptography --break-system-packages
+RUN pip3 install awscli --upgrade --break-system-packages
+RUN pip3 install virtualenv --break-system-packages
 
 #Terraform
 RUN wget https://releases.hashicorp.com/terraform/${tf_version}/terraform_${tf_version}_linux_amd64.zip
